@@ -1,0 +1,36 @@
+{
+  "expo": {
+    "name": "acererak calculator",
+    "slug": "acererak_calculator",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "./assets/acererak.png",
+    "userInterfaceStyle": "light",
+    "splash": {
+      "image": "./assets/splash.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#ffffff"
+    },
+    "assetBundlePatterns": [
+      "**/*"
+    ],
+    "ios": {
+      "supportsTablet": true
+    },
+    "android": {
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/acererak.png",
+        "backgroundColor": "#ffffff"
+      },
+      "package": "com.charliestapley.acererak_calculator"
+    },
+    "web": {
+      "favicon": "./assets/acererak.png"
+    },
+    "extra": {
+      "eas": {
+        "projectId": "54d58607-69ee-40a8-812f-bb91e61c7ff0"
+      }
+    }
+  }
+}
