@@ -1,13 +1,24 @@
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View } from 'react-native';
 import { useState, useCallback, useEffect } from 'react';
-
-import DropDownPicker from 'react-native-dropdown-picker';
 import { SafeAreaView, TextInput } from 'react-native';
+
+import BouncyCheckbox from 'react-native-bouncy-checkbox';
+import DropDownPicker from 'react-native-dropdown-picker';
 
 export default function App() {
   const [ventures, setVentures] = useState(''); // * sets the 'ventures' variable and its setter.
   const [endRoom, setEndRoom] = useState('no change'); // * sets the 'endRoom' variable and its setter.
+  const [colourlessCost, setColourlessCost] = useState(''); // * as above...
+  const [colouredCost, setColouredCost] = useState(''); // * so below
+  const [colouredOpen, setColouredOpen] = useState('');
+  const [colourlessOpen, setColourlessOpen] = useState('');
+  const [availableCasts, setAvailableCasts] = useState(0);
+  const [ventureCost, setVentureCost] = useState(0);
+  const [cost, setCost] = useState('black mana');
+  const [available, setAvailable] = useState('black open');
+
+  const [useLife, setUseLife] = useState(false); // * set the checkbox state and its setter.
 
   // * the following lines sets an individual room variable.
   const [room1, setRoom1] = useState({ val: 0 });
@@ -40,29 +51,29 @@ export default function App() {
   const [roomsOpen, setRoomsOpen] = useState(false); // * used in dropdown to define the state as closed.
   // * the following roomsX variables define how many rooms should appear in the dropdown dependant on the dungeon selected.
   const rooms1 = [
-    { label: 'Not Ventured', value: '0' },
-    { label: 'Room 1', value: '1' },
-    { label: 'Room 2', value: '2' },
-    { label: 'Room 3', value: '3' },
-    { label: 'Room 4', value: '4' },
+    { label: 'Not Ventured', value: 0 },
+    { label: 'Room 1', value: 1 },
+    { label: 'Room 2', value: 2 },
+    { label: 'Room 3', value: 3 },
+    { label: 'Room 4', value: 4 },
   ];
   const rooms2 = [
-    { label: 'Not Ventured', value: '0' },
-    { label: 'Room 1', value: '1' },
-    { label: 'Room 2', value: '2' },
-    { label: 'Room 3', value: '3' },
-    { label: 'Room 4', value: '4' },
-    { label: 'Room 5', value: '5' },
-    { label: 'Room 6', value: '6' },
-    { label: 'Room 7', value: '7' },
+    { label: 'Not Ventured', value: 0 },
+    { label: 'Room 1', value: 1 },
+    { label: 'Room 2', value: 2 },
+    { label: 'Room 3', value: 3 },
+    { label: 'Room 4', value: 4 },
+    { label: 'Room 5', value: 5 },
+    { label: 'Room 6', value: 6 },
+    { label: 'Room 7', value: 7 },
   ];
   const rooms3 = [
-    { label: 'Not Ventured', value: '0' },
-    { label: 'Room 1', value: '1' },
-    { label: 'Room 2', value: '2' },
-    { label: 'Room 3', value: '3' },
-    { label: 'Room 4', value: '4' },
-    { label: 'Room 5', value: '5' },
+    { label: 'Not Ventured', value: 0 },
+    { label: 'Room 1', value: 1 },
+    { label: 'Room 2', value: 2 },
+    { label: 'Room 3', value: 3 },
+    { label: 'Room 4', value: 4 },
+    { label: 'Room 5', value: 5 },
   ];
   const [rooms, setRooms] = useState(rooms1); // * used in dungeon dropdown to define the default value.
 
@@ -78,20 +89,28 @@ export default function App() {
   const onValueChange = (value) => {
     if (value === 'mine') {
       setRooms(rooms1);
-      setRoom('0');
+      if (room > 4) {
+        // * checks if the room selected is more than the mine itself has, if so reset it to not ventured.
+        setRoom('0');
+      }
     } else if (value === 'mage') {
       setRooms(rooms2);
-      setRoom('0');
+      if (room > 7) {
+        setRoom('0');
+      }
     } else if (value === 'undercity') {
       setRooms(rooms3);
-      setRoom('0');
+      if (room > 5) {
+        setRoom('0');
+      }
     }
     calculateVentures(); // * calls the calculateVentures function to calculate the ventures.
   };
 
   useEffect(() => {
     calculateVentures();
-  }, [ventures]); // * calls the calculateVentures function to calculate the ventures whenver a change in the input of ventures is detected.
+    calculateVentureCost();
+  }, [ventures]); // * calls the calculateVentures & calculateVentureCost function to calculate the ventures and venture cost whenever a change in the input of ventures is detected.
 
   const calculateVentures = () => {
     const calc_dungeon = dungeon ? dungeon : 'mine'; // * sets the calc_dungeon variable to the dungeon selected, if there is no dungeon it defaults to Lost Mine of Phandelver.
@@ -180,10 +199,126 @@ export default function App() {
     }
   };
 
+  useEffect(() => {
+    if (useLife) {
+      // * if the box is checked, then the placeholder text will be replaced with life.
+      setCost('life');
+      setAvailable('life open');
+    } else {
+      // * else the placeholder text will be replaced with black mana.
+      setCost('black mana');
+      setAvailable('black open');
+    }
+  }, [useLife]);
+
+  useEffect(() => {
+    calculateAvailableCasts();
+    calculateVentureCost();
+  }, [colouredCost, colouredOpen, colourlessCost, colourlessOpen]); // * calls the calculateAvailableCasts & calculateVentureCost function to calculate the available casts and venture cost whenever a change in the input of the costs/availables are detected.
+
+  const calculateAvailableCasts = () => {
+    // * the below sets the costs and available for each type of mana, if there is no number present or the value given is not a number it defaults to 0.
+    const calc_colourless_cost = parseInt(
+      isNum(colourlessCost) ? colourlessCost : 0
+    );
+    const calc_coloured_cost = parseInt(isNum(colouredCost) ? colouredCost : 0);
+    const calc_colourless_avail = parseInt(
+      isNum(colourlessOpen) ? colourlessOpen : 0
+    );
+    const calc_coloured_avail = parseInt(
+      isNum(colouredOpen) ? colouredOpen : 0
+    );
+
+    const total_cost = calc_colourless_cost + calc_coloured_cost; // * the total cost of all the casts of acererak.
+    const total_mana = calc_colourless_avail + calc_coloured_avail; // * the total mana available.
+    const available_casts = Math.min(
+      Math.floor(total_mana / total_cost),
+      Math.floor(calc_coloured_avail / calc_coloured_cost)
+    ); // * this function finds the lowest of two numbers: the total amount of times acererak can be cast using any mana, and the total amount of times acererak can be cast with the restriction that either black mana or life must be paid.
+    setAvailableCasts(available_casts ? available_casts : 0); // * sets the available cast to the above number, if it is NaN it is defaulted to 0.
+  };
+
+  const calculateVentureCost = () => {
+    const calc_ventures = isNum(ventures) ? ventures : 0;
+    const calc_colourless_cost = parseInt(
+      isNum(colourlessCost) ? colourlessCost : 0
+    );
+    const calc_coloured_cost = parseInt(isNum(colouredCost) ? colouredCost : 0);
+    if (useLife) {
+      // * if using life.
+      setVentureCost(
+        `c: ${calc_colourless_cost * calc_ventures} l: ${
+          calc_coloured_cost * calc_ventures
+        } `
+      ); // * set the cost for the amount of ventures for both colourless mana and life.
+    } else {
+      // * if not using life.
+      setVentureCost(
+        `c: ${calc_colourless_cost * calc_ventures} b: ${
+          calc_coloured_cost * calc_ventures
+        } `
+      ); // * set the cost for the amount of ventures for both colourless and black mana.
+    }
+  };
+
   // * below is the display logic for the app.
   return (
     <View style={styles.container}>
       <SafeAreaView>
+        <Text style={{ marginStart: 77, marginBottom: 10 }}>
+          ------- casts: -------
+        </Text>
+
+        <View style={{ flexDirection: 'row' }}>
+          <Text style={{ marginTop: 12, marginEnd: 10 }}>cost:</Text>
+          <TextInput
+            style={styles.miniput}
+            onChangeText={setColourlessCost}
+            value={colourlessCost}
+            placeholder='colourless'
+            placeholderTextColor={'dimgrey'}
+          />
+          <TextInput
+            style={styles.miniput}
+            onChangeText={setColouredCost}
+            value={colouredCost}
+            placeholder={cost}
+            placeholderTextColor={'dimgrey'}
+          />
+          <Text style={{ marginTop: 12, marginEnd: 5, marginStart: 5 }}>
+            life?
+          </Text>
+          <BouncyCheckbox
+            fillColor='black'
+            innerIconStyle={{
+              borderRadius: 5,
+            }}
+            onPress={(val) => {
+              setUseLife(val);
+            }}
+          />
+        </View>
+        <View style={{ flexDirection: 'row' }}>
+          <TextInput
+            style={styles.miniput}
+            onChangeText={setColourlessOpen}
+            value={colourlessOpen}
+            placeholder='colourless open'
+            placeholderTextColor={'dimgrey'}
+          />
+          <TextInput
+            style={styles.miniput}
+            onChangeText={setColouredOpen}
+            value={colouredOpen}
+            placeholder={available}
+            placeholderTextColor={'dimgrey'}
+          />
+          <Text style={{ marginTop: 12, marginEnd: 5, marginStart: 5 }}>
+            ventures:
+          </Text>
+          <Text style={styles.box}>{availableCasts}</Text>
+        </View>
+        <Text style={styles.seperator}>------- ventures: -------</Text>
         <View style={{ flexDirection: 'row' }}>
           <Text style={{ marginEnd: 100 }}>dungeon:</Text>
           <Text>room no:</Text>
@@ -203,6 +338,7 @@ export default function App() {
           <DropDownPicker
             onChangeValue={onValueChange}
             containerStyle={{ width: 150 }}
+            maxHeight={325}
             open={roomsOpen}
             onOpen={onRoomsOpen}
             value={room}
@@ -212,14 +348,18 @@ export default function App() {
             setItems={setRooms}
           />
         </View>
-        <View style={{ flexDirection: 'row' }}>
-          <Text style={{ marginTop: 23 }}>ventures: </Text>
+        <View style={{ flexDirection: 'row', marginTop: 15, marginBottom: 15 }}>
+          <Text style={{ marginTop: 12 }}>ventures: </Text>
           <TextInput
-            style={styles.input}
+            style={styles.miniput}
             onChangeText={setVentures}
             value={ventures}
-            placeholder='amount of ventures'
+            placeholder='total ventures'
           />
+          <Text style={{ marginTop: 12, marginEnd: 5, marginStart: 5 }}>
+            cost:
+          </Text>
+          <Text style={styles.box}>{ventureCost}</Text>
         </View>
 
         <View style={{ flexDirection: 'row' }}>
@@ -254,6 +394,7 @@ export default function App() {
 }
 
 // * below is the style of the app.
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -263,10 +404,21 @@ const styles = StyleSheet.create({
   },
   input: {
     borderRadius: 5,
-    height: 40,
-    margin: 12,
+    height: 35,
+    margin: 5,
+    width: 207,
     borderWidth: 1,
     padding: 10,
+  },
+  miniput: {
+    borderRadius: 5,
+    height: 35,
+    width: 110,
+    borderWidth: 1,
+    marginRight: 5,
+    marginBottom: 5,
+    marginTop: 5,
+    padding: 5,
   },
   box: {
     borderRadius: 5,
@@ -277,5 +429,10 @@ const styles = StyleSheet.create({
   },
   text: {
     marginTop: 10,
+  },
+  seperator: {
+    marginTop: 20,
+    marginBottom: 10,
+    marginStart: 75,
   },
 });

@@ -1840,34 +1840,6 @@
   resolved "https://registry.npmjs.org/@expo/vector-icons/-/vector-icons-13.0.0.tgz"
   integrity sha512-TI+l71+5aSKnShYclFa14Kum+hQMZ86b95SH6tQUG3qZEmLTarvWpKwqtTwQKqvlJSJrpFiSFu3eCuZokY6zWA==
 
-"@expo/webpack-config@^18.1.2":
-  version "18.1.2"
-  resolved "https://registry.npmjs.org/@expo/webpack-config/-/webpack-config-18.1.2.tgz"
-  integrity sha512-nlYVzcheaOZdxSt31he16f/ZgcdS3BT4BjEU85TwgFUdUJngjhT9wcmmkvXmOYz0o0NBMtZCkX8S0Z2Ta3yuNQ==
-  dependencies:
-    "@babel/core" "^7.20.2"
-    babel-loader "^8.3.0"
-    chalk "^4.0.0"
-    clean-webpack-plugin "^4.0.0"
-    copy-webpack-plugin "^10.2.0"
-    css-loader "^6.5.1"
-    css-minimizer-webpack-plugin "^3.4.1"
-    expo-pwa "0.0.126"
-    find-up "^5.0.0"
-    find-yarn-workspace-root "~2.0.0"
-    getenv "^1.0.0"
-    html-webpack-plugin "^5.5.0"
-    is-wsl "^2.0.0"
-    mini-css-extract-plugin "^2.5.2"
-    node-html-parser "^5.2.0"
-    semver "~7.3.2"
-    source-map-loader "^3.0.1"
-    style-loader "^3.3.1"
-    terser-webpack-plugin "^5.3.0"
-    webpack "^5.64.4"
-    webpack-dev-server "^4.11.1"
-    webpack-manifest-plugin "^4.1.1"
-
 "@expo/webpack-config@18.1.0":
   version "18.1.0"
   resolved "https://registry.npmjs.org/@expo/webpack-config/-/webpack-config-18.1.0.tgz"
@@ -2079,6 +2051,11 @@
   dependencies:
     mkdirp "^1.0.4"
     rimraf "^3.0.2"
+
+"@react-native-community/checkbox@^0.5.16":
+  version "0.5.16"
+  resolved "https://registry.npmjs.org/@react-native-community/checkbox/-/checkbox-0.5.16.tgz"
+  integrity sha512-j4fmWe77EAayGnKJ52BljlN8apLT3xjxG/pJOA6HZ4ew63FiXmnY7VtxTzmvDKgSPrETdQc2lmx5mdXTAufJnw==
 
 "@react-native-community/cli-clean@11.3.5":
   version "11.3.5"
@@ -4824,22 +4801,12 @@ expo-pwa@0.0.125:
     commander "2.20.0"
     update-check "1.5.3"
 
-expo-pwa@0.0.126:
-  version "0.0.126"
-  resolved "https://registry.npmjs.org/expo-pwa/-/expo-pwa-0.0.126.tgz"
-  integrity sha512-9qb6aIY0awez4FTyIiNhqyekb6sKnbvODOFCDPg23PqpkvdhuzzDRtP/Avgippt8kqRAgPpFXmIp2LaAyH1/aw==
-  dependencies:
-    "@expo/image-utils" "0.3.23"
-    chalk "^4.0.0"
-    commander "2.20.0"
-    update-check "1.5.3"
-
 expo-status-bar@~1.6.0:
   version "1.6.0"
   resolved "https://registry.npmjs.org/expo-status-bar/-/expo-status-bar-1.6.0.tgz"
   integrity sha512-e//Oi2WPdomMlMDD3skE4+1ZarKCJ/suvcB4Jo/nO427niKug5oppcPNYO+csR6y3ZglGuypS+3pp/hJ+Xp6fQ==
 
-expo@*, expo@^48.0.17, expo@~49.0.7:
+expo@*, expo@~49.0.7:
   version "49.0.7"
   resolved "https://registry.npmjs.org/expo/-/expo-49.0.7.tgz"
   integrity sha512-KGyZMuU83LNnWbfzdFrC45AhUDDAYKir7MawZJ7N8pBmHbLF8txlKq+KeZcwavD8fZREFYhSGJdTgfKPiXQymg==
@@ -4859,6 +4826,34 @@ expo@*, expo@^48.0.17, expo@~49.0.7:
     expo-modules-autolinking "1.5.0"
     expo-modules-core "1.5.9"
     fbemitter "^3.0.0"
+    invariant "^2.2.4"
+    md5-file "^3.2.3"
+    node-fetch "^2.6.7"
+    pretty-format "^26.5.2"
+    uuid "^3.4.0"
+
+expo@^48.0.17:
+  version "48.0.20"
+  resolved "https://registry.npmjs.org/expo/-/expo-48.0.20.tgz"
+  integrity sha512-SDRlLRINWWqf/OIPaUr/BsFZLhR5oEj1u9Cn06h1mPeo8pqv6ei/QTSZql4e0ixHIu3PWMPrUx9k/47nnTyTpg==
+  dependencies:
+    "@babel/runtime" "^7.20.0"
+    "@expo/cli" "0.7.3"
+    "@expo/config" "8.0.5"
+    "@expo/config-plugins" "6.0.2"
+    "@expo/vector-icons" "^13.0.0"
+    babel-preset-expo "~9.3.2"
+    cross-spawn "^6.0.5"
+    expo-application "~5.1.1"
+    expo-asset "~8.9.1"
+    expo-constants "~14.2.1"
+    expo-file-system "~15.2.2"
+    expo-font "~11.1.1"
+    expo-keep-awake "~12.0.1"
+    expo-modules-autolinking "1.2.0"
+    expo-modules-core "1.2.7"
+    fbemitter "^3.0.0"
+    getenv "^1.0.0"
     invariant "^2.2.4"
     md5-file "^3.2.3"
     node-fetch "^2.6.7"
@@ -8148,6 +8143,11 @@ react-is@^18.0.0:
   resolved "https://registry.npmjs.org/react-is/-/react-is-18.2.0.tgz"
   integrity sha512-xWGDIW6x921xtzPkhiULtthJHoJvBbF3q26fzloPCK0hsvxtPVelvftw3zjbHWSkR2km9Z+4uxbDDK/6Zw9B8w==
 
+react-native-bouncy-checkbox@^3.0.7:
+  version "3.0.7"
+  resolved "https://registry.npmjs.org/react-native-bouncy-checkbox/-/react-native-bouncy-checkbox-3.0.7.tgz"
+  integrity sha512-776TgMGt9wTpOQA1TcvFjL5VUn6o945wFYf3Ztqva62/vT2o3JAezLiP7hYh2Svd+PewfWBYSPMs4jeaSoS8Sg==
+
 react-native-dropdown-picker@^5.4.6:
   version "5.4.6"
   resolved "https://registry.npmjs.org/react-native-dropdown-picker/-/react-native-dropdown-picker-5.4.6.tgz"
@@ -8167,7 +8167,7 @@ react-native-web@~0.19.6:
     postcss-value-parser "^4.2.0"
     styleq "^0.1.3"
 
-react-native@*, react-native@0.72.3:
+react-native@*, "react-native@>= 0.55.x", "react-native@>= 0.62", react-native@0.72.3:
   version "0.72.3"
   resolved "https://registry.npmjs.org/react-native/-/react-native-0.72.3.tgz"
   integrity sha512-QqISi+JVmCssNP2FlQ4MWhlc4O/I00MRE1/GClvyZ8h/6kdsyk/sOirkYdZqX3+DrJfI3q+OnyMnsyaXIQ/5tQ==
@@ -8222,7 +8222,7 @@ react-shallow-renderer@^16.15.0:
     object-assign "^4.1.1"
     react-is "^16.12.0 || ^17.0.0 || ^18.0.0"
 
-react@*, "react@^16.0.0 || ^17.0.0 || ^18.0.0", "react@^16.8.0 || ^17.0.0 || ^18.0.0", react@^18.0.0, react@^18.2.0, react@18.2.0:
+react@*, "react@^16.0.0 || ^17.0.0 || ^18.0.0", "react@^16.8.0 || ^17.0.0 || ^18.0.0", react@^18.0.0, react@^18.2.0, "react@>= 16.x.x", react@18.2.0:
   version "18.2.0"
   resolved "https://registry.npmjs.org/react/-/react-18.2.0.tgz"
   integrity sha512-/3IjMdb2L9QbBdWiW5e3P2/npwMBaU9mHCSCUzNln0ZCYbcfTsGbTJrU/kGemdH2IWmB2ioZ+zkxtmq6g09fGQ==
@@ -8675,14 +8675,7 @@ semver@^7.5.3:
   dependencies:
     lru-cache "^6.0.0"
 
-semver@~7.3.2:
-  version "7.3.8"
-  resolved "https://registry.npmjs.org/semver/-/semver-7.3.8.tgz"
-  integrity sha512-NB1ctGL5rlHrPJtFDVIVzTyQylMLu9N9VICA6HSFJo8MCGVTMW6gfpicwKmmK/dAjTOrqu5l63JJOpDSrAis3A==
-  dependencies:
-    lru-cache "^6.0.0"
-
-semver@7.3.2:
+semver@~7.3.2, semver@7.3.2:
   version "7.3.2"
   resolved "https://registry.npmjs.org/semver/-/semver-7.3.2.tgz"
   integrity sha512-OrOb32TeeambH6UrhtShmF7CRDqhL6/5XpPNp2DuRH6+9QLw/orhp72j87v8Qa1ScDkvrrBNpZcDejAirJmfXQ==
